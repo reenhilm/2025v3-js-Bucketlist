@@ -13,7 +13,7 @@
                 "<node_internals>/**"
             ],
             "console": "integratedTerminal",
-            "program": "${workspaceFolder}\\index.js"
+            "program": "${workspaceFolder}\\scripts\\index.js"
         }
     ]
 }
