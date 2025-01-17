@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 let i = 0;
 //Representera varje aktivitet som ett objekt egenskaper som namn och status.
 
@@ -40,7 +42,7 @@ function getActivities() {
 }
 
 function createActivity(name, category, status) {
-    return { id: guidGenerator(), name: name, category: category, status: status };
+    return { id: uuidv4(), name: name, category: category, status: status };
 }
 
 function redrawItems() {   
@@ -69,19 +71,19 @@ function createHTML(parent, category, filteredActivities) {
 }
 
 function createHTMLActivity(activity) {
-    pLi = document.createElement('li');
+    const pLi = document.createElement('li');
     
-    pCb = document.createElement('input');
+    const pCb = document.createElement('input');
     pCb.setAttribute("type", "checkbox");
     pCb.checked = activity.status;
     pCb.addEventListener('change', (e) => { updateActivity(activity.id, e.target.checked); }); //no redraw needed
 
-    pDel = document.createElement('input');
+    const pDel = document.createElement('input');
     pDel.setAttribute("type", "button");
     pDel.value = '🗙';
     pDel.addEventListener('click', () => { removeActivity(activity.id); redrawItems(); });
     
-    pEl = document.createElement('p');
+    const pEl = document.createElement('p');
     pEl.innerHTML = activity.name;
     //pEl.innerHTML = `id: ${activity.id} ${activity.name}`;
     
@@ -127,12 +129,12 @@ function addActivity(activity) {
 }
 
 //GuidGenerator code stolen with brutal force from: https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id
-function guidGenerator() {
-    var S4 = function () {
-        return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-}
+// function guidGenerator() {
+//     var S4 = function () {
+//         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+//     };
+//     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+// }
 
 //Main thread program
 addBucketFormButtonClickHandler();
