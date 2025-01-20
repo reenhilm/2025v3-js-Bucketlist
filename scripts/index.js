@@ -49,15 +49,24 @@ function addBtnClearClickHandler() {
     });
 }
 
+let previousEventHandler;
+
 function modalConfirm(title, okFunction) {
     const modalTitleEl = document.getElementById('modal-title');
     modalTitleEl.innerHTML = title;
 
     const btnEl = document.getElementById('modal-button');
-    btnEl.addEventListener('click', (e) => {
+    if(previousEventHandler)
+        btnEl.removeEventListener('click', previousEventHandler)
+
+    const eventHandler = (e) => {
         okFunction();
         hideModal();
-    });   
+    };
+
+    previousEventHandler = eventHandler;
+
+    btnEl.addEventListener('click', eventHandler);   
     modal.style.display = "block";
 }
 
@@ -80,6 +89,13 @@ function addFromFormAndRefresh() {
     redrawItems();
 }
 
+const activityPrototype = {
+    id: '',
+    name: '',
+    category: 'Ingen kategori',
+    status: false
+};
+
 function addTestItems() {
     addActivity(createActivity('Japan', 'Resor', false));
     addActivity(createActivity('USA', 'Resor', false));
@@ -93,7 +109,13 @@ function getActivities() {
 }
 
 function createActivity(name, category, status) {
-    return { id: uuidv4(), name: name, category: category, status: status };
+    const activity = Object.create(activityPrototype);
+    const id = uuidv4();
+    activity.id = id;
+    activity.name = name;
+    activity.category = category;
+    activity.status = status;
+    return activity;
 }
 
 function redrawItems() {   
