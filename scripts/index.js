@@ -6,6 +6,29 @@ let i = 0;
 let _activities = [];
 const _isDevelopment = true;
 
+// Get the modal
+var modal = document.getElementById("myModal");
+
+const cancelElements = [document.querySelector(".close"), document.querySelector("#modal-no"), document.querySelector("#modal-cancel")];
+// When the user clicks on element, close the modal
+const hideModal = () => {
+    modal.style.display = "none";
+}
+cancelElements.forEach(el => {
+    
+    if (el) {
+        console.log('sant');
+        el.addEventListener('click', () => { hideModal(); });
+    }
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        hideModal();
+    }
+}
+
 document.getElementById('bucketForm').addEventListener('submit', function (event) {
     event.preventDefault();
     const form = event.target;
@@ -17,6 +40,34 @@ function addBucketFormButtonClickHandler() {
     const el = document.getElementById('bucketForm').querySelector('button[type="submit"]');
     el.addEventListener('click', (e) => { addFromFormAndRefresh(); });
 }
+
+function addBtnClearClickHandler() {
+    const el = document.querySelector('#btn_clear');
+    el.addEventListener('click', (e) => {
+        const modalOK = () => { clearLocalStorage(); redrawItems() };
+        modalConfirm('Really clear ALL activities? (note: refreshing page directly after a reset re-adds test-data again)', modalOK);
+    });
+}
+
+function modalConfirm(title, okFunction) {
+    const modalTitleEl = document.getElementById('modal-title');
+    modalTitleEl.innerHTML = title;
+
+    const btnEl = document.getElementById('modal-button');
+    btnEl.addEventListener('click', (e) => {
+        okFunction();
+        hideModal();
+    });   
+    modal.style.display = "block";
+}
+
+
+function clearLocalStorage() {
+    localStorage.clear();
+    _activities = [];
+    console.log('cleared localStorage');
+}
+
 
 //Used by submitbutton on click
 function addFromFormAndRefresh() {
@@ -81,7 +132,10 @@ function createHTMLActivity(activity) {
     const pDel = document.createElement('input');
     pDel.setAttribute("type", "button");
     pDel.value = '🗙';
-    pDel.addEventListener('click', () => { removeActivity(activity.id); redrawItems(); });
+    pDel.addEventListener('click', () => {
+        const modalOK = () => { removeActivity(activity.id); redrawItems() };
+        modalConfirm(`Really delete activity? ${activity.name}`, modalOK);
+    });
     
     const pEl = document.createElement('p');
     pEl.innerHTML = activity.name;
@@ -138,6 +192,7 @@ function addActivity(activity) {
 
 //Main thread program
 addBucketFormButtonClickHandler();
+addBtnClearClickHandler();
 
 console.log('localStorage är just nu:')
 console.log(localStorage.getItem('ActivitySave'));
@@ -160,7 +215,7 @@ else
 {
     console.log('welcome back');
     //We are a returning visitor and want to load
-    //Load/Parse _activities from localStorage, special handling for booleans
+    //Load/Parse _activities from localStorage
 
     console.log('get JSON from localStorage');
     let jsonFromStorage = localStorage.getItem('ActivitySave');
@@ -168,17 +223,13 @@ else
 
     console.log('parse JSON from localStorage');
     let objFromJSON = JSON.parse(jsonFromStorage);
-    objFromJSON.forEach(e => console.log(typeof(e.status)));
-    console.log(objFromJSON);
 
-    //Maybe not necessary step
-    console.log('convert status-strings to bools in obj');
+    //Maybe not necessary step, I was confusing this with a Date that needs sepparate conversion
+    /*
+    //convert status-strings to bools in obj
     let objWithBools = objFromJSON.forEach(e => e.status = Boolean(e.status));
-    console.log(objWithBools);
-
-    console.log('save to let');
+    */
     _activities = objFromJSON;
-    console.log(_activities);
 }
 
 function setALocalStorage(activities) {
@@ -187,3 +238,6 @@ function setALocalStorage(activities) {
 }
 
 redrawItems();
+
+
+
