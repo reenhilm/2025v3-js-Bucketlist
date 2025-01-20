@@ -219,6 +219,13 @@ addBtnClearClickHandler();
 console.log('localStorage är just nu:')
 console.log(localStorage.getItem('ActivitySave'));
 
+const parseActivityJSONAsActivity = function (jsonActivity)
+{
+    const newActivity = Object.create(activityPrototype);
+    Object.assign(newActivity, jsonActivity);
+    return newActivity;
+}
+
 if (localStorage.getItem('ActivitySave') == null) {
     //If this is first time visiting this page we are here
     console.log('first time visiting');
@@ -251,7 +258,7 @@ else
     //convert status-strings to bools in obj
     let objWithBools = objFromJSON.forEach(e => e.status = Boolean(e.status));
     */
-    _activities = objFromJSON;
+    _activities = objFromJSON.map(parseActivityJSONAsActivity);
 }
 
 function setALocalStorage(activities) {
