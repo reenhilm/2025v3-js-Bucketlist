@@ -153,6 +153,7 @@ function createHTMLActivity(activity) {
 
     const pDel = document.createElement('input');
     pDel.setAttribute("type", "button");
+    pDel.setAttribute("title", "Delete");
     pDel.value = '🗙';
     pDel.addEventListener('click', () => {
         const modalOK = () => { removeActivity(activity.id); redrawItems() };

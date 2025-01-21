@@ -208,7 +208,7 @@ header {
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--clr-bodybg);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -217,7 +217,6 @@ header {
 
 .close {
     cursor: pointer;
-    padding: 30px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -238,5 +237,9 @@ header {
     ul li:nth-child(even) {
         background: var(--clr-darkevenbg);
         color: var(--clr-darkeventext);
+    }
+
+    .modal-content {
+        background-color: var(--clr-darkbodybg);
     }
 }
