@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 let i = 0;
 //Representera varje aktivitet som ett objekt egenskaper som namn och status.
 
@@ -74,7 +72,6 @@ function modalConfirm(title, okFunction) {
 function clearLocalStorage() {
     localStorage.clear();
     _activities = [];
-    console.log('cleared localStorage');
 }
 
 
@@ -110,7 +107,7 @@ function getActivities() {
 
 function createActivity(name, category, status) {
     const activity = Object.create(activityPrototype);
-    const id = uuidv4();
+    const id = self.crypto.randomUUID();
     activity.id = id;
     activity.name = name;
     activity.category = category;
@@ -204,20 +201,9 @@ function addActivity(activity) {
     setALocalStorage(_activities);
 }
 
-//GuidGenerator code stolen with brutal force from: https://stackoverflow.com/questions/6860853/generate-random-string-for-div-id
-// function guidGenerator() {
-//     var S4 = function () {
-//         return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-//     };
-//     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-// }
-
 //Main thread program
 addBucketFormButtonClickHandler();
 addBtnClearClickHandler();
-
-console.log('localStorage är just nu:')
-console.log(localStorage.getItem('ActivitySave'));
 
 const parseActivityJSONAsActivity = function (jsonActivity)
 {
@@ -228,11 +214,9 @@ const parseActivityJSONAsActivity = function (jsonActivity)
 
 if (localStorage.getItem('ActivitySave') == null) {
     //If this is first time visiting this page we are here
-    console.log('first time visiting');
 
     if (_isDevelopment)
     {
-        console.log('adding test items');
         addTestItems(); //This one save to setALocalStorage anyway
     }
     else {
@@ -242,31 +226,19 @@ if (localStorage.getItem('ActivitySave') == null) {
 }
 else
 {
-    console.log('welcome back');
     //We are a returning visitor and want to load
     //Load/Parse _activities from localStorage
 
-    console.log('get JSON from localStorage');
     let jsonFromStorage = localStorage.getItem('ActivitySave');
     console.log(jsonFromStorage);
 
-    console.log('parse JSON from localStorage');
     let objFromJSON = JSON.parse(jsonFromStorage);
 
-    //Maybe not necessary step, I was confusing this with a Date that needs sepparate conversion
-    /*
-    //convert status-strings to bools in obj
-    let objWithBools = objFromJSON.forEach(e => e.status = Boolean(e.status));
-    */
     _activities = objFromJSON.map(parseActivityJSONAsActivity);
 }
 
 function setALocalStorage(activities) {
-    console.log('sparar i localStorage');
     localStorage.setItem('ActivitySave', JSON.stringify(activities));
 }
 
 redrawItems();
-
-
-
