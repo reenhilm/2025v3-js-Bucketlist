@@ -15,7 +15,6 @@ const hideModal = () => {
 cancelElements.forEach(el => {
     
     if (el) {
-        console.log('sant');
         el.addEventListener('click', () => { hideModal(); });
     }
 });
@@ -227,13 +226,10 @@ if (localStorage.getItem('ActivitySave') == null) {
 else
 {
     //We are a returning visitor and want to load
+
     //Load/Parse _activities from localStorage
-
-    let jsonFromStorage = localStorage.getItem('ActivitySave');
-    console.log(jsonFromStorage);
-
-    let objFromJSON = JSON.parse(jsonFromStorage);
-
+    const jsonFromStorage = localStorage.getItem('ActivitySave');
+    const objFromJSON = JSON.parse(jsonFromStorage);
     _activities = objFromJSON.map(parseActivityJSONAsActivity);
 }
 
