@@ -10,24 +10,22 @@
 </head>
 
 <body>
-    <header>
-        <h1>Min Bucket List</h1><button type="button" id="btn_clear">Rensa localStorage</button>
+    <header class="flow">
+        <h1>Min Bucket List</h1><button type="button" class="button-20" id="btn_clear">Rensa localStorage</button>
     </header>
     <!-- The Modal -->
-    <section id="myModal" class="modal">
-    
+    <section id="myModal" class="modal">    
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="modal-title">Some text in the Modal..</p>
-            <button id="modal-button">Yes</button>
-            <button id="modal-no">No</button>
-            <button id="modal-cancel">Cancel</button>
-        </div>
-    
+            <button id="modal-button" class="button-20">Yes</button>
+            <button id="modal-no" class="button-20">No</button>
+            <button id="modal-cancel" class="button-20">Cancel</button>
+        </div>    
     </section>
-    <main>
-        <form id="bucketForm">
+    <main class="flow">
+        <form id="bucketForm" class="flow">
             <input type="text" id="activityName" placeholder="Vad vill du göra?" required />
             <select id="activityCategory">
                 <option value="Resor">Resor</option>
@@ -35,7 +33,7 @@
                 <option value="Lärande">Lärande</option>
                 <option value="Hobby">Hobby</option>
             </select>
-            <button type="submit">Lägg till</button>            
+            <button type="submit" class="button-20">Lägg till</button>            
         </form>
         <section id="bucketLists"></section>
     </main>

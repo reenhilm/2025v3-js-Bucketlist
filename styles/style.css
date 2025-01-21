@@ -1,21 +1,169 @@
+/* makes sizing simpler */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* remove default spacing */
+/* force styling of type through styling, rather than elements */
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+/* min body height */
 body {
+    min-height: 100vh;
+}
+
+/* responsive images/videos */
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+/* make headings wrap better */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+p,
+li,
+figcaption {
+    text-wrap: pretty;
+    max-width: 55ch;
+}
+
+:root {
+    /* light */
+    --clr-bodybg: #ffffff;
+    --clr-bodytext: #3e5574;
+    --clr-oddbg: #d7dde2;
+    --clr-oddtext: #2b3c51;
+    --clr-evenbg: #b2bcc8;
+    --clr-eventext: #19222f;
+
+    /* dark */
+    --clr-darkbodybg: #000000;
+    --clr-darkbodytext: #b3bdca;
+    --clr-darkoddbg: #19222f;
+    --clr-darkoddtext: #b3bdca;
+    --clr-darkevenbg: #2b3c51;
+    --clr-darkeventext: #d8dfe3;
+
+    /* darkbodybg, darkevenbg, darkeventext */
+    --clr-accent: #000000; 
+    --clr-green-400: #2b3c51; 
+    --clr-accent-light-1: #d8dfe3;
+
+    /* bodybg, evenbg, eventext */
+    /* --clr-accent: #ffffff; 
+    --clr-green-400: #b2bcc8;
+    --clr-accent-light-1: #19222f; */
+}
+
+body {
+    margin:0px 8px;
     font-family: Arial, sans-serif;
+    background-color: var(--clr-bodybg);
+    color: var(--clr-bodytext);
 }
 
 #bucketLists div {
     margin-bottom: 20px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
+h1
+{
+    font-size: 28px;
 }
 
-li {
-    display: flex;
-    justify-content: space-between;
+h2
+{
+    font-size: 24px;
+}
+
+.flow {
+    margin-bottom: 20px;
+}
+
+.button-20,
+.button-20:visited {
+    appearance: button;
+    background-color: var(--clr-green-400);
+    border-radius: 1rem;
+    color: var(--clr-accent-light-1);
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+}
+
+.button-20,
+.button-20:visited {
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border: 1px solid var(--clr-accent);
+    box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.button-20:focus:not(:focus-visible),
+.button-20:focus {
+    outline: 0;
+}
+
+.button-20:hover,
+.button-20:focus {
+    background-color: var(--clr-accent-light-1);
+    border-color: var(--clr-accent);
+    color: var(--clr-accent);
+    text-decoration: none;
+}
+
+.button-20:active {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent-light-1);
+    color: var(--clr-accent-light-1);
+    text-decoration: none;
+}
+
+.button-20:active:focus {
+    box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, var(--clr-accent) 0 0 0 .2rem;
+}
+
+ul li {
+    padding: 12px 8px 12px 20px;
+    display:grid;
+    gap:20px;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    padding: 5px 0;
+    
+
+    input[type="checkbox"] {
+        transform: scale(2.5);
+    }
+
+    input[type="button"] {
+        padding:8px 10px;
+    }
+}
+
+ul li:nth-child(odd) {
+    background: var(--clr-oddbg);
+    color: var(--clr-oddtext);
+}
+ul li:nth-child(even) {
+    background: var(--clr-evenbg);
+    color: var(--clr-eventext);
 }
 
 button {
@@ -23,6 +171,8 @@ button {
 }
 
 header {
+    margin-top:20px;
+
     display: flex;
 
     #btn_clear {
@@ -68,4 +218,25 @@ header {
 .close {
     cursor: pointer;
     padding: 30px;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark light;
+    }
+
+    body {
+        background-color: var(--clr-darkbodybg);
+        color: var(--clr-darkbodytext);
+    }
+
+    ul li:nth-child(odd) {
+        background: var(--clr-darkoddbg);
+        color: var(--clr-darkoddtext);
+    }
+
+    ul li:nth-child(even) {
+        background: var(--clr-darkevenbg);
+        color: var(--clr-darkeventext);
+    }
 }

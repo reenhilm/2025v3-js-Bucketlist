@@ -35,7 +35,10 @@ document.getElementById('bucketForm').addEventListener('submit', function (event
 
 function addBucketFormButtonClickHandler() {    
     const el = document.getElementById('bucketForm').querySelector('button[type="submit"]');
-    el.addEventListener('click', (e) => { addFromFormAndRefresh(); });
+    el.addEventListener('click', (e) => {
+        if (e.target.form.checkValidity())
+            addFromFormAndRefresh();
+    });
 }
 
 function addBtnClearClickHandler() {
@@ -133,6 +136,7 @@ function createHTML(parent, category, filteredActivities) {
     })()); //Immediately invoke the function
 
     const ul = parent.appendChild(document.createElement('ul'));
+    ul.classList.add('flow');
 
     filteredActivities.forEach(a => {
         ul.appendChild(createHTMLActivity(a));
@@ -159,9 +163,8 @@ function createHTMLActivity(activity) {
     pEl.innerHTML = activity.name;
     //pEl.innerHTML = `id: ${activity.id} ${activity.name}`;
     
-    
+    pLi.appendChild(pCb);        
     pLi.appendChild(pEl);
-    pLi.appendChild(pCb);    
     pLi.appendChild(pDel);    
     
     return pLi;
