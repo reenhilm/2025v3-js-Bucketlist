@@ -132,11 +132,9 @@ function createHTML(parent, category, filteredActivities) {
         return a.name.localeCompare(b.name, 'sv');
     });
 
-    parent.appendChild((() => {
-        const h2 = document.createElement('h2');
-        h2.innerHTML = category;
-        return h2;
-    })()); // Immediately invoke the function
+    const h2 = document.createElement('h2');
+    h2.innerHTML = category;
+    parent.appendChild(h2);
 
     const ul = parent.appendChild(document.createElement('ul'));
     ul.classList.add('flow');
