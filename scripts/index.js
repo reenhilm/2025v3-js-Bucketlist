@@ -117,12 +117,21 @@ function redrawItems() {
 
     const distinctCategories = [...new Set(_activities.map(e => e.category))];
 
+    distinctCategories.sort((a, b) => {
+        return a.localeCompare(b, 'sv');
+    });
+
     distinctCategories.forEach(e => {
         createHTML(el, e, _activities.filter(a => a.category === e));
     });
 }
 
 function createHTML(parent, category, filteredActivities) {
+    const sortedActivities = [...filteredActivities];
+    sortedActivities.sort((a, b) => {
+        return a.name.localeCompare(b.name, 'sv');
+    });
+
     parent.appendChild((() => {
         const h2 = document.createElement('h2');
         h2.innerHTML = category;
@@ -132,7 +141,7 @@ function createHTML(parent, category, filteredActivities) {
     const ul = parent.appendChild(document.createElement('ul'));
     ul.classList.add('flow');
 
-    filteredActivities.forEach(a => {
+    sortedActivities.forEach(a => {
         ul.appendChild(createHTMLActivity(a));
     });
 }
