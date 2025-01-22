@@ -1,25 +1,22 @@
 // Globals
 let _activities = [];
-var modal = document.getElementById("myModal");
+var modal = document.querySelector("dialog");
 let previousYESEventHandler;
 
 function setupModalHide()
 {
-    modal.hide = () => {       
-        modal.style.display = "none";
-    }
     const cancelElements = [document.querySelector(".close"), document.querySelector("#modal-no"), document.querySelector("#modal-cancel")];
 
     cancelElements.forEach(el => {    
         if (el) {
-            el.addEventListener('click', () => { modal.hide(); });
+            el.addEventListener('click', () => { modal.close(); });
         }
     });
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
         if (event.target == modal) {
-            modal.hide();
+            modal.close();
         }
     }
 }
@@ -62,13 +59,13 @@ function modalConfirm(title, YESFunction) {
 
     const eventHandler = (e) => {
         YESFunction();
-        modal.hide();
+        modal.close();
     };
 
     previousYESEventHandler = eventHandler;
 
-    btnEl.addEventListener('click', eventHandler);   
-    modal.style.display = "block";
+    btnEl.addEventListener('click', eventHandler);
+    modal.showModal();
 }
 
 function clearLocalStorage() {

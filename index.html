@@ -15,16 +15,17 @@
         <h1>Min Bucket List</h1><button type="button" class="button-20" id="btn_clear">Rensa localStorage</button>
     </header>
     <!-- The Modal -->
-    <section id="myModal" class="modal">    
-        <!-- Modal content -->
-        <div class="modal-content">
+
+    <dialog>
+        <form method="dialog">
             <button class="close button-20 flow material-symbols-outlined" title="Close">close</button>
             <p id="modal-title" class="flow">Some text in the Modal..</p>
             <button id="modal-button" class="button-20">Yes</button>
             <button id="modal-no" class="button-20">No</button>
-            <button id="modal-cancel" class="button-20">Cancel</button>
-        </div>    
-    </section>
+            <button id="modal-cancel" class="button-20" autofocus>Cancel</button>
+        </form>
+    </dialog>    
+
     <main class="flow">
         <form id="bucketForm" class="flow">
             <input type="text" id="activityName" placeholder="Vad vill du göra?" required />
