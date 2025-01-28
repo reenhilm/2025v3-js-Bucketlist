@@ -3,19 +3,18 @@ let _activities = [];
 var modal = document.querySelector("dialog");
 let previousYESEventHandler;
 
-function setupModalHide()
-{
+function setupModalHide() {
     const cancelElements = [document.querySelector(".close"), document.querySelector("#modal-no"), document.querySelector("#modal-cancel")];
 
-    cancelElements.forEach(el => {    
+    cancelElements.forEach(el => {
         if (el) {
             el.addEventListener('click', () => { modal.close(); });
         }
     });
 
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-        if (event.target == modal) {
+    window.onclick = function ({target}) {
+        if (target == modal) {
             modal.close();
         }
     }
@@ -141,13 +140,13 @@ function createHTML(parent, category, filteredActivities) {
     });
 }
 
-function createHTMLActivity(activity) {
+function createHTMLActivity({ status: activityStatus, id: activityId, name: activityName }) {
     const pLi = document.createElement('li');
     
     const pCb = document.createElement('input');
     pCb.setAttribute("type", "checkbox");
-    pCb.checked = activity.status;
-    pCb.addEventListener('change', (e) => { updateActivity(activity.id, e.target.checked); }); //no redraw needed
+    pCb.checked = activityStatus;
+    pCb.addEventListener('change', (e) => { updateActivity(activityId, e.target.checked); }); //no redraw needed
 
     const pDel = document.createElement('input');
     pDel.setAttribute("type", "button");
@@ -155,12 +154,12 @@ function createHTMLActivity(activity) {
     pDel.classList.add("material-symbols-outlined");
     pDel.value = 'delete';
     pDel.addEventListener('click', () => {
-        const modalOK = () => { removeActivity(activity.id); redrawItems() };
-        modalConfirm(`Really delete activity? ${activity.name}`, modalOK);
+        const modalOK = () => { removeActivity(activityId); redrawItems() };
+        modalConfirm(`Really delete activity? ${activityName}`, modalOK);
     });
     
     const pEl = document.createElement('p');
-    pEl.innerHTML = activity.name;
+    pEl.innerHTML = activityName;
     
     pLi.appendChild(pCb);        
     pLi.appendChild(pEl);
